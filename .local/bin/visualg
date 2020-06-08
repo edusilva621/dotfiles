@@ -1,0 +1,3 @@
+#!/bin/sh
+cd $HOME/.local/share/visualg &&
+WINEPREFIX=$(pwd) wine visualgv25.exe

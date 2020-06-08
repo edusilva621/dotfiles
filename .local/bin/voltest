@@ -1,0 +1,12 @@
+#!/bin/sh
+Vol(){
+        mutvol=$(amixer get Master | tail -1 | awk '{print $6}')
+
+    if [ "$mutvol" = "[off]" ]; then
+    echo -e "\ue04f$vol"
+    else
+    echo -e "\ue05d$vol"
+   fi
+}
+
+echo -en $(Vol)

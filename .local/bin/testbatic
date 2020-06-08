@@ -1,0 +1,11 @@
+#!/bin/sh
+
+Battery(){
+    if [ $(cat /sys/class/power_supply/BAT0/status) = "Discharging" ]; then
+           batic="\ue238"
+    else
+           batic="\ue239"
+    fi
+    echo -e "$batic"
+}
+echo -en $(Battery)

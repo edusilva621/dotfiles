@@ -1,0 +1,15 @@
+#!/bin/sh
+MPD(){
+      song=$(mpc current)
+
+     if [ -z "$song" ]; then
+      echo ''
+     elif [ $(echo $song | wc -m) -ge 45 ]; then
+      songout=$(mpc current | cut -c 1-45)
+      echo -e "\ue1a6$songout...|"
+     else
+      echo -e "\ue1a6$song|"
+     fi
+}
+
+echo -en $(MPD)
