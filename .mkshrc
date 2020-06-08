@@ -1,0 +1,59 @@
+#!/bin/mksh
+
+## .mkshrc - Gentoo Linux
+## credits to uruk/dark/sick 
+
+bind ^L=clear-screen
+umask 022
+
+
+[ `id -u` = '0' ] && PS1='[$PWD] # > ' || PS1='[$PWD] $ > ' 
+PS2='> '
+
+export PS1 PS2 
+
+HISTSIZE=256
+HISTFILE=/tmp/.`id -nu`-history
+
+export HISTSIZE HISTFILE
+
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin:/opt/bin:~/.local/bin
+MANPATH=/usr/share/doc:/usr/share/man:/usr/local/man:~/man:/usr/local/share/man
+
+CHARSET=UTF-8
+LANG=en_US.UTF-8
+LOCALE=en_US.UTF-8
+
+SHELL=/bin/mksh
+PAGER=less
+EDITOR=vim
+BROWSER=firefox
+
+HOMESRC=$HOME/.local/src
+
+export PATH MANPATH ROVER_OPEN BSDSRCDIR CHARSET LANG LC_ALL LC_CTYPE LOCALE SHELL PAGER EDITOR HOMESRC
+
+alias rm="rm -i"
+alias iwd="iwctl station wlp3s0"
+alias webcam="mpv av://v4l2:/dev/video0"
+alias vol="amixer set Master"
+alias la="ls -a"
+alias mv="mv -i"
+alias .="cd .."
+alias which='command -v'
+alias steamdir='cd ~/.local/share/Steam'
+alias linktor='links -g -socks-proxy 127.0.0.1:9050'
+alias r='ranger'
+alias startx='startx -- vt1'
+
+ix() {
+    curl -F f:1='<-' ix.io < "$*"
+}
+
+
+0x0() {
+   for i in "$@"; do
+         curl -F file=@$i http://0x0.st
+    done
+}
