@@ -1,0 +1,10 @@
+#!/bin/bash
+
+patches=(
+	"http://st.suckless.org/patches/scrollback/st-scrollback-0.8.diff"
+	"http://st.suckless.org/patches/scrollback/st-scrollback-mouse-0.8.diff"
+)
+
+for f in "${patches[@]}"; do
+	curl -L "$f" | patch -p1
+done
