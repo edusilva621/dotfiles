@@ -1,0 +1,71 @@
+#!/bin/sh
+
+# Download doujinshis from nhentai.net
+# This script is Copylefted under the terms of the GNU GPL v2
+# https://www.gnu.org/licenses/copyleft
+# https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+err() { 
+	echo "Usage:
+	nhentai -i ID -p PAGES -[OPTIONS] 
+Options:
+	-v: verbose cURL output;
+	-i: specify the gallery's ID; (to get the id, click on any page of the doujinshi, left click, click on "view". 
+	    The URL should look like .../galleries/ID/x.jpg, and that is the ID you need
+	-p: specify the number of pages you want to download;
+	-h: give you wisdom on how this beautiful piece of software works;
+	"
+}
+
+if [ -z $1 ]; then
+ err
+ exit 0
+fi
+
+curlArgs="-s -O -J"
+n=0
+numPages=0
+dir=.
+
+
+while getopts "i:p: h v" opt
+do
+	case $opt in
+		h) 
+		  err && exit 1
+		  ;; 
+		i) 
+		  id=${OPTARG}
+		  ;;
+		p) 
+		  numPages=${OPTARG}
+		  ;;
+		v)
+		  curlArgs="-O -J"
+		  ;;
+	esac
+done
+
+	echo "Creating $id directory..."
+if [ -d $id ]; then
+ echo "Directory exists, exiting."
+ 	exit 1
+else
+ 	mkdir $id
+	cd $id
+fi
+  	
+	while [ $n != $numPages ]
+do
+	page=$(( $n+1 ))
+	n=$page
+	echo "Downloading page $n..."
+	curl $curlArgs https://i.nhentai.net/galleries/$id/$page.jpg
+	curl $curlArgs https://i.nhentai.net/galleries/$id/$page.png
+done
+
+# delete HTML junk
+	echo "Removing HTML files..."
+	sleep 1
+	notImg=$(file * | grep HTML | awk '{print $1}' | sed s/://)
+	rm -rf $notImg
