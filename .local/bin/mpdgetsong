@@ -1,8 +1,9 @@
 #!/bin/sh
 MPD(){
       song=$(mpc current)
-
-     if [ -z "$song" ]; then
+     if [ -z $(pidof mpd) ]; then
+      echo ''
+     elif [ -z "$song" ]; then
       echo ''
      elif [ $(echo $song | wc -m) -ge 45 ]; then
       songout=$(mpc current | cut -c 1-45)
